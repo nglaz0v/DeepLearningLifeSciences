@@ -21,6 +21,11 @@ model = dc.models.KerasModel(
     batch_size=1000,
     model_dir='tf')
 
+keras_model.summary()
+
+from tensorflow.keras.utils import plot_model
+plot_model(keras_model, show_shapes=True, show_layer_names=True, show_layer_activations=True, rankdir='TB', to_file='tfbinding.png')
+
 # Load the data.
 
 train = dc.data.DiskDataset('train_dataset')
