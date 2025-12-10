@@ -28,6 +28,11 @@ model = dc.models.KerasModel(
     output_types=['prediction', 'loss'],
     model_dir='mnist')
 
+keras_model.summary()
+
+from tensorflow.keras.utils import plot_model
+plot_model(keras_model, show_shapes=True, show_layer_names=True, show_layer_activations=True, rankdir='TB', to_file='mnist.png')
+
 # Train the model.
 
 model.fit(train_dataset, nb_epoch=10)
