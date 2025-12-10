@@ -21,7 +21,7 @@ from deepchem.models.optimizers import ExponentialDecay
 from deepchem.models.seqtoseq import AspuruGuzikAutoEncoder
 batch_size = 100
 batches_per_epoch = len(train_smiles)/batch_size
-learning_rate = ExponentialDecay(0.001, 0.95, batches_per_epoch)
+learning_rate = 0.001  # ExponentialDecay(0.001, 0.95, batches_per_epoch)
 model = AspuruGuzikAutoEncoder(tokens, max_length, model_dir='vae', batch_size=batch_size, learning_rate=learning_rate)
 
 # Train the model.
