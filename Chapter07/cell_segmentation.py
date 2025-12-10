@@ -44,13 +44,18 @@ concat4 = layers.Concatenate(axis=3)([features, deconv3])
 logits = layers.Conv2D(1, kernel_size=5, strides=1, padding='same')(concat4)
 output = layers.Activation(tf.math.sigmoid)(logits)
 keras_model = tf.keras.Model(inputs=features, outputs=[output, logits])
-learning_rate = dc.models.optimizers.ExponentialDecay(0.01, 0.9, 250)
+learning_rate = 0.01  # dc.models.optimizers.ExponentialDecay(0.01, 0.9, 250)
 model = dc.models.KerasModel(
     keras_model,
     loss=dc.models.losses.SigmoidCrossEntropy(),
     output_types=['prediction', 'loss'],
     learning_rate=learning_rate,
     model_dir='models/segmentation')
+
+keras_model.summary()
+
+from tensorflow.keras.utils import plot_model
+plot_model(keras_model, show_shapes=True, show_layer_names=True, show_layer_activations=True, rankdir='TB', to_file='cell_segmentation.png')
 
 if not os.path.exists('./models'):
   os.mkdir('models')
