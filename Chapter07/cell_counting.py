@@ -26,12 +26,17 @@ for num_outputs in [16, 32, 64, 128, 256]:
   prev_layer = layers.Conv2D(num_outputs, kernel_size=5, strides=2, activation=tf.nn.relu)(prev_layer)
 output = layers.Dense(1)(layers.Flatten()(prev_layer))
 keras_model = tf.keras.Model(inputs=features, outputs=output)
-learning_rate = dc.models.optimizers.ExponentialDecay(0.001, 0.9, 250)
+learning_rate = 0.001  # dc.models.optimizers.ExponentialDecay(0.001, 0.9, 250)
 model = dc.models.KerasModel(
     keras_model,
     loss=dc.models.losses.L2Loss(),
     learning_rate=learning_rate,
     model_dir='models/model')
+
+keras_model.summary()
+
+from tensorflow.keras.utils import plot_model
+plot_model(keras_model, show_shapes=True, show_layer_names=True, show_layer_activations=True, rankdir='TB', to_file='cell_counting.png')
 
 if not os.path.exists('./models'):
   os.mkdir('models')
